@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--Laravelの.envファイルの言語設定を反映-->
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <!--文字コード　UTF-8は様々な文字を正しく表示できる-->
+    <meta charset="UTF-8">
+    <!--デバイスごとの表示領域の設定-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--リファラー(ユーザーがどこから現在のウェブページにアクセスしてきたかを示す情報、HTTPヘッダにある)の脆弱性を防ぐ-->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Fonts -->
+    <!--Google Fontsとの接続を事前に確立し、フォントの読み込みを高速化するための設定-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!--Noto Sans JP 日本語の表示に適し、フォントの太さ[400(標準),500(中)]、幅広い用途に使えるフォント-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+    <!--デザイン性がある、デザイン的なアクセントがあるフォント-->
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
+
+    <!--Font Awesome アイコンフォントとSVGアイコンのライブラリ-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <link href="{{ asset('css/dictionary.css') }}" rel="stylesheet">
+
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!--integrity属性:読み込まれるファイルが改ざんされていないことを確認するためのセキュリティ機能-->
+    
+</head>
+
+<body>
+    <div class="container-lg">
+        @yield('content')
+    </div>
+    
+</body>
+
+</html>
