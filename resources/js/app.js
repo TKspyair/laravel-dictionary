@@ -13,7 +13,9 @@ import { Livewire } from 'livewire' //Livewireのコアライブラリをイン�
 Livewire.start() // Livewireを起動、Livewireコンポーネントがページ上で初期化され、動的な処理が可能になる
 
 //Alpain.jsの起動
+/*
 import Alpine from 'alpinejs'  //Alpine.jsのコアライブラリをインポート
 window.Alpine = Alpine //windowオブジェクトにAlpine.jsをグローバルに公開し、Livewireや他のスクリプトからAlpine.jsにアクセスできるようにする
 Alpine.start()  //Alpine.jsを起動し、HTMLマークアップ内のx-dataなどのディレクティブを処理を可能にする
+*/
 

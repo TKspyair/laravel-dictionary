@@ -12,31 +12,32 @@ use Illuminate\Contracts\Auth\MustVerifyEmail; //LaravelのMustVerifyEmailとい
 
 class User extends Authenticatable implements MustVerifyEmail //「implements MustVerifyEmail」でメール認証機能を有効化
 {
- use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
- protected $fillable = [
-  'name',
-  'email',
-  'password',
- ];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
- protected $hidden = [
-  'password',
-  'remember_token',
- ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
- protected $casts = [
-  'email_verified_at' => 'datetime',
-  'password' => 'hashed',
- ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
- public function words()
- {
-  return $this->hasMany(Word::class);
- }
+    //リレーションシップ
+    public function words()
+    {
+        return $this->hasMany(Word::class);
+    }
 
- public function tags()
- {
-  return $this->hasMany(Tag::class);
- }
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

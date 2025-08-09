@@ -1,36 +1,56 @@
 <?php
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider; //ログイン後のリダイレクト先（HOME）を定義
+use Illuminate\Auth\Events\Registered; //ユーザー登録が完了した際に発生させるイベント
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
+use Illuminate\Support\Facades\Hash; //スワードを安全な文字列に変換（ハッシュ化）
+use Illuminate\Validation\Rules;  //パスワードの強度など、高度な入力値チェックのルールを定義
+use Livewire\Attributes\Layout; //このコンポーネントが使うレイアウトファイルを指定
 use Livewire\Volt\Component;
 
+//共通レイアウトの指定
 new #[Layout('layouts.guest')] class extends Component
 {
     public string $name = '';
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
+    
+    /*#[Validate]属性を使用しない理由 -Livewireの2つのバリデーション-
+    
+    1. $this->validate(): registerのようなアクションメソッドの中で呼び出す。
+    フォームが送信された特定のタイミングで一度だけバリデーションを実行したい場合に適しています。
+    
+    2. #[Validate]属性: コンポーネントのプロパティに直接ルールを記述する。
+    ユーザーが入力フィールドを更新するたびにリアルタイムでバリデーションを行いたい場合に非常に便利です。
 
-    /**
-     * Handle an incoming registration request.
-     */
+    まとめ： この登録フォームでは、ユーザーが全ての情報を入力し、「Register」ボタンを押したタイミングで一度だけ検証すれば十分です。
+    そのため、registerメソッド内で$this->validate()を呼び出す方法が、処理の流れを追いやすく、直接的で分かりやすい実装となっています
+    */
+    
+    //ユーザー登録処理
     public function register(): void
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()], 
+            //「Rules\Password::defaults()」：Laravel推奨のパスワード強度(Rules\Password::defaults())を満たしているかの確認
         ]);
 
+        //パスワードのハッシュ化
         $validated['password'] = Hash::make($validated['password']);
 
+        //バリデーション済みのデータで、新しいユーザーをDBに作成
         event(new Registered($user = User::create($validated)));
+        /* create()の処理の流れ
+        1 $user = new User()：Userモデルのインスタンスを作成 
+        2 fil()：でモデルに定義されてる$fillableにリストアップされているキーの値のみインスタンスにセット
+        3 save()：DBにインスタンスにセットされた値をインサート(挿入する)
+        */
 
+        //ユーザー登録後、自動ログイン
         Auth::login($user);
 
         $this->redirect(RouteServiceProvider::HOME, navigate: true);

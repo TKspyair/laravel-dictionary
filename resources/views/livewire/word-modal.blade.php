@@ -1,3 +1,4 @@
+
 <!--モーダルの開閉状態の管理-->
 <div x-data="{ showModal: false }" @closeModal.window="showModal = false">
     <button @click="showModal = true" class="fab-button btn btn-primary rounded-circle shadow-lg">
@@ -14,7 +15,7 @@
             <div class="modal-content">
                 <form wire:submit.prevent="save">
                     <!--フォームの送信時にsaveメソッド(EloquentORMのメソッド：DBへのレコード保存)を実行
-                      「.prevent」：ブラウザのデフォルトのフォーム送信を無効化し、ページのリロードをなくす-->
+                    「.prevent」：ブラウザのデフォルトのフォーム送信を無効化し、ページのリロードをなくす-->
 
                     <!--モーダルヘッダー部-->
                     <div class="modal-header">

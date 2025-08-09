@@ -32,7 +32,9 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 //wordsフォルダ内へのルーティング
-Route::get('/words', [WordController::class, 'index'])->middleware(['auth', 'verified'])->name('words.index');
+Route::get('/words', [WordController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('words.index');
 //コントローラー内のメソッドを指定してルーティングする場合は、コントローラー内にreturn view()でルーティング先を定義する
 //name('words.index')があることで、ルート名でURL生成ができる　例：<a href="{{ route('words.index') }}
 

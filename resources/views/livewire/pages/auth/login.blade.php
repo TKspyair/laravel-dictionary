@@ -38,7 +38,10 @@ new #[Layout('layouts.guest')] class extends Component
         Session::regenerate();
 
         //ログイン後のリダイレクト
-        $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
+        $this>redirect(RouteServiceProvider::HOME,navigate: true); //お試し
+        
+        //$this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
+        
         /*redirectIntended():Livewire\Componentクラスのメソッド、認証に特化したリダイレクト機能 ※Laravelのredirect()->intended()と機能は一緒
         navigate: true :「Livewire Nav」というページ遷移を高速化する仕組みを実装するオプション
         　リダイレクト時に通常はページ全体をリロードするが、このオプションによりリロードを阻止し、Livewireにより非同期通信で最小限の変更要素のみを反映する。
