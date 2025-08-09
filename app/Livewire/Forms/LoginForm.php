@@ -116,7 +116,7 @@ class LoginForm extends Form
         //次にログイン試行可能になるまでの時間を秒単位で取得
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-        //$second
+        
         throw ValidationException::withMessages([
             'form.email' => trans('auth.throttle', [
                 'seconds' => $seconds, 
